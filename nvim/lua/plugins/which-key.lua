@@ -13,6 +13,8 @@ return {
       { "<leader>s", group = "Search (Telescope)" },
       { "<leader>c", group = "Code (LSP)" },
       { "<leader>g", group = "Git" },
+      { "<leader>l", group = "Lazy" },
+      { "<leader>h", group = "Harpoon" },
     })
   end,
 }

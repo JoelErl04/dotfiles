@@ -23,3 +23,6 @@ map("x", "<leader>p", '"_dP', { desc = "Paste without losing yank" })
 
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
+
+-- Lazy plugin manager
+map("n", "<leader>ll", "<cmd>Lazy<CR>", { desc = "Open Lazy" })

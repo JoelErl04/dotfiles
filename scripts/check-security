@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+CYAN='\033[0;36m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
+header() { echo -e "\n${BLUE}${BOLD}▶ $1${RESET}"; }
+ok()     { echo -e "${GREEN}✔ $1${RESET}"; }
+warn()   { echo -e "${YELLOW}⚠ $1${RESET}"; }
+fail()   { echo -e "${RED}✘ $1${RESET}"; }
+
+echo -e "${CYAN}${BOLD}"
+echo "  ╔══════════════════════════════╗"
+echo "  ║      Security Check          ║"
+echo "  ╚══════════════════════════════╝"
+echo -e "${RESET}"
+
+header "Firewall status"
+if systemctl is-enabled --quiet nftables && sudo nft list tables | grep -q "inet filter"; then
+    ok "nftables is active"
+    sudo nft list ruleset | grep -E "policy|hook" | sed 's/^/  /'
+else
+    fail "nftables is NOT running"
+fi
+
+header "Updating rkhunter signatures"
+if command -v rkhunter &>/dev/null; then
+    sudo rkhunter --update --nocolors 2>/dev/null \
+        && ok "signatures updated" || warn "signature update failed"
+    sudo rkhunter --propupd --nocolors 2>/dev/null \
+        && ok "file properties updated"
+
+    header "Running rkhunter check"
+    if sudo rkhunter --check --skip-keypress --nocolors --report-warnings-only 2>/dev/null; then
+        ok "no warnings found"
+    else
+        warn "warnings found — check /var/log/rkhunter.log"
+    fi
+else
+    warn "rkhunter not installed — run: sudo pacman -S rkhunter"
+fi
+
+header "Checking for failed systemd services"
+failed=$(systemctl --failed --no-legend 2>/dev/null)
+if [[ -z "$failed" ]]; then
+    ok "no failed services"
+else
+    warn "failed services detected:"
+    echo "$failed" | sed 's/^/  /'
+fi
+
+header "Checking for setuid/setgid binaries (new since last run)"
+find /usr/bin /usr/sbin /bin /sbin -perm /6000 2>/dev/null | sort > /tmp/suid-current
+if [[ -f /var/log/suid-baseline ]]; then
+    diff /var/log/suid-baseline /tmp/suid-current > /tmp/suid-diff
+    if [[ -s /tmp/suid-diff ]]; then
+        warn "setuid/setgid changes detected:"
+        cat /tmp/suid-diff | sed 's/^/  /'
+    else
+        ok "no changes in setuid/setgid binaries"
+    fi
+else
+    warn "no baseline found — creating one at /var/log/suid-baseline"
+    sudo cp /tmp/suid-current /var/log/suid-baseline
+    ok "baseline created — run again to detect future changes"
+fi
+
+echo -e "\n${GREEN}${BOLD}  ✔ Security check complete!${RESET}\n"

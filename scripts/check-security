@@ -54,18 +54,21 @@ else
 fi
 
 header "Checking for setuid/setgid binaries (new since last run)"
-find /usr/bin /usr/sbin /bin /sbin -perm /6000 2>/dev/null | sort > /tmp/suid-current
+suid_current=$(mktemp)
+suid_diff=$(mktemp)
+trap 'rm -f "$suid_current" "$suid_diff"' EXIT
+find /usr/bin /usr/sbin /bin /sbin -perm /6000 2>/dev/null | sort > "$suid_current"
 if [[ -f /var/log/suid-baseline ]]; then
-    diff /var/log/suid-baseline /tmp/suid-current > /tmp/suid-diff
-    if [[ -s /tmp/suid-diff ]]; then
+    diff /var/log/suid-baseline "$suid_current" > "$suid_diff"
+    if [[ -s "$suid_diff" ]]; then
         warn "setuid/setgid changes detected:"
-        cat /tmp/suid-diff | sed 's/^/  /'
+        sed 's/^/  /' "$suid_diff"
     else
         ok "no changes in setuid/setgid binaries"
     fi
 else
     warn "no baseline found — creating one at /var/log/suid-baseline"
-    sudo cp /tmp/suid-current /var/log/suid-baseline
+    sudo cp "$suid_current" /var/log/suid-baseline
     ok "baseline created — run again to detect future changes"
 fi
 

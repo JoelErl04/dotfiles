@@ -7,6 +7,8 @@ while true; do
     NEXT=$(find "$WALLPAPER_DIR" -type f \( -name "*.jpg" -o -name "*.png" -o -name "*.jpeg" \) | \
     shuf -n 1)
 
+    [ -z "$NEXT" ] && { sleep 10; continue; }
+
     if [ "$NEXT" = "$LAST" ]; then
         continue
     fi

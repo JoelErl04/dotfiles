@@ -74,6 +74,9 @@ bootstrap_yay() {
     local tmp
     tmp="$(mktemp -d)"
     git clone https://aur.archlinux.org/yay.git "$tmp/yay"
+    less "$tmp/yay/PKGBUILD"
+    read -rp "[install.sh] Proceed with yay build? [y/N] " _confirm
+    [[ "$_confirm" == [yY] ]] || die "Aborted by user"
     (cd "$tmp/yay" && makepkg -si --noconfirm)
     rm -rf "$tmp"
     success "yay installed"
@@ -86,7 +89,10 @@ install_packages() {
 
     info "Installing AUR packages..."
     # Remove yay from AUR list since it's handled by bootstrap_yay
-    local aur_to_install=("${AUR_PACKAGES[@]/yay}")
+    local aur_to_install=()
+    for pkg in "${AUR_PACKAGES[@]}"; do
+        [[ "$pkg" != "yay" ]] && aur_to_install+=("$pkg")
+    done
     yay -S --needed --noconfirm "${aur_to_install[@]}"
 }
 

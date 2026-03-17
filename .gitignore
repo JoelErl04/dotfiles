@@ -48,6 +48,9 @@ btop/themes/
 # --- kitty: ignore session files ---
 kitty/kitty.session
 
+# --- tmux: ignore plugin files ---
+tmux/plugins/
+
 # --- Common junk to suppress ---
 *.swp
 *.swo

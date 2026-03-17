@@ -16,6 +16,8 @@ PACMAN_PACKAGES=(
     neovim
     starship
     git
+    rkhunter
+    pacman-contrib
 )
 
 # Flag: these are AUR packages (not in official repos)

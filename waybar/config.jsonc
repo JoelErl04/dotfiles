@@ -1,0 +1,119 @@
+// Waybar — Hyprland
+{
+  "layer": "top",
+  "position": "top",
+  "height": 40,
+  "spacing": 0,
+  "fixed-center": true,
+  "exclusive": true,
+  "passthrough": false,
+  "ipc": true,
+  "reload_style_on_change": true,
+
+  "modules-left":   ["hyprland/workspaces", "hyprland/window"],
+  "modules-center": ["clock"],
+  "modules-right":  ["wireplumber", "backlight", "bluetooth", "network", "battery"],
+
+  "hyprland/workspaces": {
+    "format": "{id}:{icon}",
+    "format-icons": {
+      "active":  "󰮯",
+      "default": "󰝦",
+      "urgent":  "󱈸",
+      "empty":   "󰊠"
+    },
+    "persistent-workspaces": { "*": 4 },
+    "sort-by": "id",
+    "on-scroll-up":   "hyprctl dispatch workspace e-1",
+    "on-scroll-down": "hyprctl dispatch workspace e+1"
+  },
+
+  "hyprland/window": {
+    "format": "{}",
+    "max-length": 40,
+    "separate-outputs": true,
+    "rewrite": {
+      "^$": "Desktop"
+    }
+  },
+
+  "clock": {
+    "interval": 1,
+    "format": "{:%d - %H:%M}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "month",
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months":   "<span color='#cdd6f4'><b>{}</b></span>",
+        "days":     "<span color='#cdd6f4'>{}</span>",
+        "weeks":    "<span color='#6c7086'>W{}</span>",
+        "weekdays": "<span color='#89b4fa'><b>{}</b></span>",
+        "today":    "<span color='#f38ba8'><b><u>{}</u></b></span>"
+      }
+    },
+    "actions": {
+      "on-scroll-up":   "shift_down",
+      "on-scroll-down": "shift_up"
+    }
+  },
+
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "󰖁 muted",
+    "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
+    "max-volume": 100,
+    "scroll-step": 2,
+    "on-click":       "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "kitty --title wiremix wiremix",
+    "tooltip": true,
+    "tooltip-format": "󰕾 {volume}%\n󰓃 {node_name}\nClick → mute | Right-click → pavucontrol"
+  },
+
+  "backlight": {
+    "format": "{icon} {percent}%",
+    "format-icons": ["󰃞", "󰃟", "󰃠"],
+    "scroll-step": 2,
+    "on-click": "bash -c 'brightnessctl set 60% 2>/dev/null || light -S 60 2>/dev/null'",
+    "tooltip": true,
+    "tooltip-format": "󰃠 {percent}%\nScroll ±5% | Click → 60%"
+  },
+
+  "bluetooth": {
+    "format":                    "󰂯 on",
+    "format-on":                 "󰂯 on",
+    "format-off":                "󰂲 off",
+    "format-disabled":           "󰂲 off",
+    "format-connected":          "󰂱 {device_alias}",
+    "format-connected-battery":  "󰂱 {device_alias} {device_battery_percentage}%",
+    "tooltip-format":            "Bluetooth: {status}\nClick → toggle | Right-click → manager",
+    "tooltip-format-connected":  "󰂱 {device_alias}\n󰥉 {device_battery_percentage}%\nClick → toggle | Right-click → manager",
+    "on-click":       "bluetoothctl show | grep -q 'Powered: yes' && bluetoothctl power off || bluetoothctl power on",
+    "on-click-right": "blueman-manager"
+  },
+
+  "network": {
+    "format-wifi":        "󰤨 {signalStrength}%",
+    "format-ethernet":    "󰈀 {ipaddr}",
+    "format-disconnected":"󰤭 —",
+    "format-linked":      "󰤫 —",
+    "tooltip-format-wifi":       "󰤨 {essid}\n󰒢 {signalStrength}%\n󰩟 {ipaddr}\n󰩘 {frequency} GHz\n󰁅 {bandwidthDownBytes}\n󰁞 {bandwidthUpBytes}\nRight-click → settings",
+    "tooltip-format-ethernet":   "󰈀 {ifname}\n󰩟 {ipaddr}\n󰁅 {bandwidthDownBytes}\n󰁞 {bandwidthUpBytes}",
+    "tooltip-format-disconnected":"󰤭 No connection",
+    "on-click-right": "kitty --title nmtui nmtui",
+    "interval": 2
+  },
+
+  "battery": {
+    "interval": 30,
+    "states": { "good": 95, "warning": 30, "critical": 15 },
+    "format":          "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-plugged":  "󰚥 {capacity}%",
+    "format-full":     "󰁹 full",
+    "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "tooltip-format":          "󰁹 {capacity}%\n{timeTo}\n󰄐 {power}W",
+    "tooltip-format-charging": "󰂄 {capacity}%\n{timeTo}\n󰄐 {power}W"
+  }
+}

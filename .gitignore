@@ -1,0 +1,50 @@
+# --- Default: ignore everything ---
+*
+
+# --- Explicitly track your configs ---
+!.gitignore
+!starship.toml
+
+!btop/
+!btop/**
+
+!dunst/
+!dunst/**
+
+!git/
+!git/**
+
+!hypr/
+!hypr/**
+
+!kitty/
+!kitty/**
+
+!lazygit/
+!lazygit/**
+
+!waybar/
+!waybar/**
+
+!nvim/
+!nvim/**
+
+!tmux/
+!tmux/**
+
+# --- Hyprland runtime/state files ---
+hypr/hyprland.conf.d/
+hypr/*.log
+
+# --- btop: ignore state and proc cache ---
+btop/btop.log
+btop/themes/
+
+# --- kitty: ignore session files ---
+kitty/kitty.session
+
+# --- Common junk to suppress ---
+*.swp
+*.swo
+*~
+.DS_Store

@@ -23,7 +23,3 @@ map("x", "<leader>p", '"_dP', { desc = "Paste without losing yank" })
 
 -- Clear search highlight
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
-
--- Quick save / quit
-map("n", "<leader>w", "<cmd>w<CR>",  { desc = "Save file" })
-map("n", "<leader>q", "<cmd>q<CR>",  { desc = "Quit window" })

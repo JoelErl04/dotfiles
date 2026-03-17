@@ -10,7 +10,7 @@ return {
 
     -- Register leader group prefixes so which-key shows categories
     wk.add({
-      { "<leader>f", group = "Find (Telescope)" },
+      { "<leader>s", group = "Search (Telescope)" },
       { "<leader>c", group = "Code (LSP)" },
       { "<leader>g", group = "Git" },
     })

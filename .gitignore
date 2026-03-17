@@ -32,6 +32,11 @@
 !tmux/
 !tmux/**
 
+!scripts/
+!scripts/**
+
+!install.sh
+
 # --- Hyprland runtime/state files ---
 hypr/hyprland.conf.d/
 hypr/*.log

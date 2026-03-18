@@ -30,6 +30,19 @@ return {
           colors.border         = c.border_inactive
           colors.border_highlight = c.border_active
         end,
+        on_highlights = function(hl, _)
+          hl.FloatBorder            = { fg = c.border_inactive }
+          hl.NormalFloat            = { bg = c.surface }
+          hl.WinSeparator           = { fg = c.border_inactive }
+          hl.TelescopeNormal        = { bg = c.surface }
+          hl.TelescopeBorder        = { fg = c.border_active, bg = c.surface }
+          hl.TelescopePromptNormal  = { bg = c.overlay }
+          hl.TelescopePromptBorder  = { fg = c.border_active, bg = c.overlay }
+          hl.TelescopeResultsNormal = { bg = c.surface }
+          hl.TelescopePreviewNormal = { bg = c.surface }
+          hl.TelescopeSelection     = { bg = c.overlay }
+          hl.TelescopeMatching      = { fg = c.accent_secondary }
+        end,
       })
       vim.cmd.colorscheme("tokyonight-night")
     end,

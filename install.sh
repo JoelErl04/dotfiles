@@ -11,11 +11,21 @@ PACMAN_PACKAGES=(
     kitty
     waybar
     dunst
+    rofi
+    swww
+    hypridle
     btop
     tmux
     neovim
     starship
     git
+    jq
+    grim
+    slurp
+    wl-clipboard
+    playerctl
+    brightnessctl
+    wireplumber
     rkhunter
     pacman-contrib
 )
@@ -23,6 +33,7 @@ PACMAN_PACKAGES=(
 # Flag: these are AUR packages (not in official repos)
 AUR_PACKAGES=(
     lazygit
+    grimblast
     yay  # AUR helper itself, must be installed first manually — see bootstrap below
 )
 
@@ -33,6 +44,7 @@ CONFIG_LINKS=(
     "kitty:kitty"
     "waybar:waybar"
     "dunst:dunst"
+    "rofi:rofi"
     "btop:btop"
     "tmux:tmux"
     "lazygit:lazygit"
@@ -111,7 +123,29 @@ link_configs() {
     backup_and_link "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
 }
 
-# --- Phase 4: Link scripts to PATH ---
+# --- Phase 4: Set up theme system ---
+setup_themes() {
+    info "Setting up theme system..."
+
+    local themes_dir="$DOTFILES_DIR/themes"
+
+    if [[ ! -L "$themes_dir/active" ]]; then
+        ln -s "$themes_dir/earthy-dark" "$themes_dir/active"
+        success "Created themes/active -> earthy-dark"
+    else
+        info "themes/active symlink already exists, skipping"
+    fi
+
+    backup_and_link "$themes_dir/active" "$HOME/.config/theme"
+
+    info "Running theme generators..."
+    for script in "$themes_dir/scripts/gen-"*.sh; do
+        bash "$script"
+    done
+    success "Theme generated"
+}
+
+# --- Phase 5: Link scripts to PATH ---
 link_scripts() {
     if [[ ! -d "$DOTFILES_DIR/scripts" ]]; then
         info "No scripts/ dir found, skipping"
@@ -129,7 +163,7 @@ link_scripts() {
     done
 }
 
-# --- Phase 5: Set zsh as default shell ---
+# --- Phase 6: Set zsh as default shell ---
 set_shell() {
     if [[ "$SHELL" == "$(which zsh)" ]]; then
         info "zsh already default shell, skipping"
@@ -150,6 +184,7 @@ main() {
     bootstrap_yay
     install_packages
     link_configs
+    setup_themes
     link_scripts
     set_shell
 

@@ -52,20 +52,20 @@ bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 # status bar — minimal catppuccin mocha
 # =============================================================================
 set -g status-position bottom
-set -g status-style "bg=#1e1e2e,fg=#cdd6f4"
+set -g status-style "bg=#{{background}},fg=#{{foreground}}"
 set -g status-left-length 30
 set -g status-right-length 50
 
-set -g status-left "#[bg=#89b4fa,fg=#1e1e2e,bold] #S #[bg=#1e1e2e,fg=#89b4fa]"
-set -g status-right "#[fg=#6c7086] %H:%M  %d %b "
+set -g status-left "#[bg=#{{accent_secondary}},fg=#{{background}},bold] #S #[bg=#{{background}},fg=#{{accent_secondary}}]"
+set -g status-right "#[fg=#{{muted}}] %H:%M  %d %b "
 
-set -g window-status-format "#[fg=#6c7086] #I #W "
-set -g window-status-current-format "#[fg=#89b4fa,bold] #I #W "
+set -g window-status-format "#[fg=#{{muted}}] #I #W "
+set -g window-status-current-format "#[fg=#{{accent_secondary}},bold] #I #W "
 
-set -g pane-border-style "fg=#313244"
-set -g pane-active-border-style "fg=#89b4fa"
+set -g pane-border-style "fg=#{{border_inactive}}"
+set -g pane-active-border-style "fg=#{{border_active}}"
 
-set -g message-style "bg=#1e1e2e,fg=#cdd6f4"
+set -g message-style "bg=#{{background}},fg=#{{foreground}}"
 
 # =============================================================================
 # plugins

@@ -1,25 +1,45 @@
 return {
-  -- Colorscheme: tokyonight is well-maintained and has great LSP/treesitter colours
   {
     "folke/tokyonight.nvim",
-    priority = 1000, -- load before all other plugins so colours are set first
-    opts = {
-      style = "night",
-      transparent = false,
-    },
-    config = function(_, opts)
-      require("tokyonight").setup(opts)
+    priority = 1000,
+    config = function()
+      local function palette()
+        local p = {}
+        local path = vim.fn.expand("~/.config/theme/colors.ini")
+        for line in io.lines(path) do
+          local k, v = line:match("^(%w+)%s*=%s*(%x+)$")
+          if k and v then p[k] = "#" .. v end
+        end
+        return p
+      end
+
+      local c = palette()
+
+      require("tokyonight").setup({
+        style = "night",
+        transparent = false,
+        on_colors = function(colors)
+          colors.bg             = c.background
+          colors.bg_dark        = c.background
+          colors.bg_float       = c.surface
+          colors.bg_popup       = c.surface
+          colors.bg_sidebar     = c.surface
+          colors.bg_statusline  = c.surface
+          colors.fg             = c.foreground
+          colors.comment        = c.muted
+          colors.border         = c.border_inactive
+          colors.border_highlight = c.border_active
+        end,
+      })
       vim.cmd.colorscheme("tokyonight-night")
     end,
   },
 
-  -- Icons: required by lualine and many other plugins
   {
     "nvim-tree/nvim-web-devicons",
-    lazy = true, -- only load when another plugin requests it
+    lazy = true,
   },
 
-  -- Statusline: lualine is fast and minimal
   {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },

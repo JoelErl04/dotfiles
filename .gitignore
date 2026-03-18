@@ -5,6 +5,13 @@
 !.gitignore
 !starship.toml
 
+!themes/
+!themes/**
+
+# --- themes: ignore generated tool configs (regenerate with themes/scripts/gen-*.sh) ---
+themes/*/*-colors.conf
+themes/*/*-colors.css
+
 !btop/
 !btop/**
 

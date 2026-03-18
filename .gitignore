@@ -26,8 +26,6 @@ themes/*/*-colors.rasi
 # --- dunst: ignore generated dunstrc (regenerate with themes/scripts/gen-dunst.sh) ---
 dunst/dunstrc
 
-!git/
-!git/**
 
 !hypr/
 !hypr/**

@@ -1,6 +1,0 @@
-[user]
-	email = j.t.erlandsson@gmail.com
-	name = JoelErl
-
-[includeIf "gitdir:~/school/"]
-	path = ~/.config/git/config-school

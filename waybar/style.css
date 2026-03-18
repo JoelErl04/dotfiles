@@ -1,24 +1,8 @@
 /* ============================================================
-   COLOR VARIABLES — edit here to retheme everything
+   COLOR VARIABLES — generated from ~/dotfiles/themes/active/colors.ini
    ============================================================ */
 
-@define-color text        #cdd6f4;
-@define-color subtext     #a6adc8;
-@define-color overlay     #85877a;
-@define-color surface     #313244;
-@define-color pill        rgba(30, 30, 46, 0.85);
-
-@define-color accent-ws       #89b4fa;
-@define-color accent-clock    #b4befe;
-@define-color accent-volume   #cdd6f4;
-@define-color accent-bright   #f9e2af;
-@define-color accent-bt       #cdd6f4;
-@define-color accent-wifi     #a6e3a1;
-@define-color accent-battery  #a6e3a1;
-
-@define-color state-warn      #f9e2af;
-@define-color state-crit      #f38ba8;
-@define-color state-charge    #89b4fa;
+@import "../theme/waybar-colors.css";
 
 /* ============================================================
    GLOBAL
@@ -54,7 +38,7 @@ window#waybar.hidden {
    ============================================================ */
 
 tooltip {
-  background-color: rgba(24, 24, 37, 0.95);
+  background-color: @tooltip-bg;
   border: 1px solid @surface;
   border-radius: 7px;
   font-size: 13px;
@@ -199,7 +183,7 @@ tooltip label {
 
 @keyframes blink {
   to {
-    color: rgba(17, 17, 27, 1);
+    color: @blink-text;
     background-color: @state-crit;
   }
 }

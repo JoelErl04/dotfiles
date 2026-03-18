@@ -41,6 +41,9 @@ dunst/dunstrc
 !waybar/
 !waybar/**
 
+# --- waybar: ignore generated config (regenerate with themes/scripts/gen-waybar.sh) ---
+waybar/config.jsonc
+
 !nvim/
 !nvim/**
 

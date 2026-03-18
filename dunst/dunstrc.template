@@ -1,0 +1,28 @@
+[global]
+    monitor = 0
+    origin = top-right
+    offset = (10, 10)
+    gap_size = 4
+    font = JetBrainsMono Nerd Font 11
+    corner_radius = 8
+    frame_width = 2
+    padding = 8
+    horizontal_padding = 10
+
+[urgency_low]
+    background = "{{surface}}"
+    foreground = "{{foreground}}"
+    frame_color = "{{border_inactive}}"
+    timeout = 3
+
+[urgency_normal]
+    background = "{{surface}}"
+    foreground = "{{foreground}}"
+    frame_color = "{{border_active}}"
+    timeout = 5
+
+[urgency_critical]
+    background = "{{surface}}"
+    foreground = "{{accent_urgent}}"
+    frame_color = "{{accent_urgent}}"
+    timeout = 0

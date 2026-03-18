@@ -11,12 +11,19 @@
 # --- themes: ignore generated tool configs (regenerate with themes/scripts/gen-*.sh) ---
 themes/*/*-colors.conf
 themes/*/*-colors.css
+themes/*/*-colors.rasi
+
+!rofi/
+!rofi/**
 
 !btop/
 !btop/**
 
 !dunst/
 !dunst/**
+
+# --- dunst: ignore generated dunstrc (regenerate with themes/scripts/gen-dunst.sh) ---
+dunst/dunstrc
 
 !git/
 !git/**

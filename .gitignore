@@ -3,7 +3,8 @@
 
 # --- Explicitly track your configs ---
 !.gitignore
-!starship.toml
+!starship.toml.template
+starship.toml
 
 !themes/
 !themes/**

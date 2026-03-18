@@ -31,6 +31,7 @@ symbol = " "
 symbol = " "
 
 [directory]
+style     = "bold #{{accent_secondary}}"
 read_only = " 󰌾"
 
 [docker_context]
@@ -55,6 +56,7 @@ symbol = " "
 symbol = " "
 
 [git_branch]
+style  = "#{{accent_primary}}"
 symbol = " "
 
 [git_commit]
@@ -203,3 +205,14 @@ symbol = " "
 
 [zig]
 symbol = " "
+
+[git_status]
+style = "#{{accent_urgent}}"
+
+[character]
+success_symbol = "[❯](#{{accent_primary}})"
+error_symbol   = "[❯](#{{accent_urgent}})"
+
+[cmd_duration]
+style    = "#{{muted}}"
+min_time = 2000
